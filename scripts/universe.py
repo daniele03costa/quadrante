@@ -158,7 +158,7 @@ AIR.PA Airbus|SU.PA Schneider Electric|DTE.DE Deutsche Telekom|IBE.MC Iberdrola|
 ABI.BR AB InBev|CS.PA AXA|ITX.MC Inditex|MUV2.DE Munich Re|RMS.PA Hermès|EL.PA EssilorLuxottica|DG.PA Vinci|BAS.DE BASF|
 BAYN.DE Bayer|ADS.DE Adidas|MBG.DE Mercedes-Benz|BMW.DE BMW|VOW3.DE Volkswagen|INGA.AS ING|AD.AS Ahold Delhaize|
 PRX.AS Prosus|KER.PA Kering|SAF.PA Safran|BBVA.MC BBVA|DB1.DE Deutsche Börse|IFX.DE Infineon|NOKIA.HE Nokia|RI.PA Pernod Ricard|
-AI.PA Air Liquide|RHM.DE Rheinmetall|ENR.DE Siemens Energy|ENA.MC Endesa"""
+AI.PA Air Liquide|RHM.DE Rheinmetall|ENR.DE Siemens Energy|ELE.MC Endesa"""
 
 _COUNTRY_BY_SUFFIX = {".MI": "Italia", ".DE": "Germania", ".PA": "Francia", ".AS": "Paesi Bassi",
                       ".MC": "Spagna", ".BR": "Belgio", ".HE": "Finlandia"}

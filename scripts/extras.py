@@ -215,5 +215,6 @@ def fetch_macro_calendar(demo=False):
             for e in http_json(f"https://nfs.faireconomy.media/{feed}.json"):
                 out.append({k: e.get(k) for k in ("date", "country", "title", "impact", "forecast", "previous", "actual")})
         except Exception as ex:
-            print("  calendario macro non disponibile:", feed, ex)
+            if feed == "ff_calendar_thisweek":           # la settimana prossima spesso non è ancora pubblicata
+                print("  calendario macro non disponibile:", ex)
     return out

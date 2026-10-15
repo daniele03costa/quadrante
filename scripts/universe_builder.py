@@ -19,6 +19,7 @@ import urllib.request
 
 import pandas as pd
 
+VERSION = 2          # aumentalo quando cambiano le fonti: l'universo in cache viene ricostruito
 UA = {"User-Agent": "Mozilla/5.0 (Quadrante personal dashboard; contact via GitHub)"}
 
 # (pagina Wikipedia, suffisso Yahoo, paese)
@@ -44,14 +45,16 @@ WIKI_INDEXES = [
     ("OMX_Stockholm_30", ".ST", "Svezia"),
     ("OMX_Helsinki_25", ".HE", "Finlandia"),
     ("OMX_Copenhagen_25", ".CO", "Danimarca"),
-    ("PSI_(stock_index)", ".LS", "Portogallo"),
+    (("PSI_(stock_index)", "PSI-20", "PSI_20"), ".LS", "Portogallo"),
     ("Austrian_Traded_Index", ".VI", "Austria"),
     ("OBX_Index", ".OL", "Norvegia"),
 ]
 
+# simboli Yahoo (alcune cripto hanno un identificativo numerico per evitare omonimie)
 CRYPTO_EXTRA = ["BTC", "ETH", "SOL", "XRP", "BNB", "ADA", "DOGE", "LINK", "AVAX", "TRX", "DOT", "LTC", "BCH",
-                "XLM", "ATOM", "NEAR", "ETC", "FIL", "HBAR", "ICP", "APT", "ARB", "OP", "AAVE", "UNI", "MKR",
-                "ALGO", "VET", "SUI", "TON", "SHIB", "PEPE", "INJ", "RNDR", "GRT", "XMR", "SAND", "MANA", "EOS", "XTZ"]
+                "XLM", "ATOM", "NEAR", "ETC", "FIL", "HBAR", "ICP", "APT21794", "ARB11841", "OP", "AAVE", "UNI7083",
+                "ALGO", "VET", "SUI20947", "TON11419", "SHIB", "PEPE24478", "INJ", "RENDER", "GRT6719", "XMR", "SAND",
+                "MANA", "XTZ"]
 
 
 def _get(url, timeout=40):
@@ -82,7 +85,17 @@ def _norm_ticker(raw, suffix):
 
 
 def wiki_constituents(page, suffix, country):
-    html = _get(f"https://en.wikipedia.org/wiki/{page}")
+    pages = page if isinstance(page, tuple) else (page,)
+    html, err = None, None
+    for pg in pages:                                  # alcune pagine cambiano nome: prova le alternative
+        try:
+            html = _get(f"https://en.wikipedia.org/wiki/{pg}")
+            page = pg
+            break
+        except Exception as e:
+            err = e
+    if html is None:
+        raise err
     tables = pd.read_html(io.StringIO(html))
     best = []
     for df in tables:
@@ -153,7 +166,8 @@ def build(path, base_rows, max_age_days=7, etf_keep=1200, force=False, sample=No
         try:
             with open(path) as f:
                 cached = json.load(f)
-            if time.time() - cached.get("ts", 0) < max_age_days * 86400 and len(cached.get("rows", [])) > 500:
+            if (cached.get("v") == VERSION and time.time() - cached.get("ts", 0) < max_age_days * 86400
+                    and len(cached.get("rows", [])) > 500):
                 print(f"Universo in cache: {len(cached['rows'])} strumenti")
                 return cached["rows"]
         except Exception:
@@ -177,7 +191,7 @@ def build(path, base_rows, max_age_days=7, etf_keep=1200, force=False, sample=No
             print(f"  {page}: non disponibile ({e})")
         time.sleep(0.5)
     for c in CRYPTO_EXTRA:
-        rows.setdefault(f"{c}-USD", {"t": f"{c}-USD", "name": c, "type": "Cripto", "country": "Globale", "sector": "", "industry": "", "src": "cripto"})
+        rows.setdefault(f"{c}-USD", {"t": f"{c}-USD", "name": re.sub(r"\d+$", "", c), "type": "Cripto", "country": "Globale", "sector": "", "industry": "", "src": "cripto"})
     try:
         etfs = [e for e in nasdaq_etfs() if e["t"] not in rows]
         print(f"  ETF USA candidati: {len(etfs)}")
@@ -193,6 +207,6 @@ def build(path, base_rows, max_age_days=7, etf_keep=1200, force=False, sample=No
     if sample:
         return out
     with open(path, "w") as f:
-        json.dump({"ts": time.time(), "rows": out}, f)
+        json.dump({"v": VERSION, "ts": time.time(), "rows": out}, f)
     print(f"Universo costruito: {len(out)} strumenti")
     return out

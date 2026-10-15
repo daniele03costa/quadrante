@@ -139,23 +139,37 @@ def demo_prices(tickers):
     return out
 
 
+_FRED_CACHE = {}
+_FRED_DOWN = False
+
+
 def fetch_fred(series_id):
-    if DEMO:
+    """Serie FRED (CSV pubblico, senza chiave). Risultati in memoria per non riscaricarli;
+    se FRED non risponde, smette di provarci per il resto dell'esecuzione (si usano i segnali di mercato)."""
+    global _FRED_DOWN
+    if DEMO or _FRED_DOWN:
         return None
+    if series_id in _FRED_CACHE:
+        return _FRED_CACHE[series_id]
     import urllib.request
+    s = None
     try:
         req = urllib.request.Request(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}",
                                      headers=extras.UA)
-        with urllib.request.urlopen(req, timeout=30) as resp:
+        with urllib.request.urlopen(req, timeout=45) as resp:
             df = pd.read_csv(io.StringIO(resp.read().decode()))
         df.columns = ["date", "value"]
         df["date"] = pd.to_datetime(df["date"])
         df["value"] = pd.to_numeric(df["value"], errors="coerce")
         s = df.dropna().set_index("date")["value"]
-        return s if len(s) > 30 else None
+        s = s if len(s) > 30 else None
     except Exception as e:
         print(f"  FRED {series_id} non disponibile: {e}")
-        return None
+        if "timed out" in str(e) or "timeout" in str(e).lower():
+            _FRED_DOWN = True
+            print("  FRED non risponde: per questa esecuzione uso solo i segnali di mercato")
+    _FRED_CACHE[series_id] = s
+    return s
 
 
 def load_meta(universe, wiki):
