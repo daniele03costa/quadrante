@@ -1,0 +1,28 @@
+name: Prova veloce
+
+# Avvio manuale dal tab "Actions" (5-10 minuti). Prende pochi titoli da ogni fonte
+# (Wikipedia, NASDAQ, Yahoo, FRED, CFTC, ForexFactory), esegue tutto il calcolo
+# e stampa nel log una tabella "FONTE / TITOLI / CON PREZZI". Non pubblica nulla.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+      - run: pip install -r scripts/requirements.txt
+      - name: Prova veloce
+        run: python scripts/update_data.py --smoke
+      - name: Riepilogo fonti
+        if: always()
+        run: cat data/sources_report.json || true

@@ -1,0 +1,12 @@
+{
+ "interno": {
+  "titoli": 320,
+  "con_prezzi": 320,
+  "senza_prezzi": []
+ },
+ "cambi": {
+  "titoli": 3,
+  "con_prezzi": 3,
+  "senza_prezzi": []
+ }
+}

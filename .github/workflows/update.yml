@@ -1,0 +1,85 @@
+name: Aggiorna dati e pubblica
+
+on:
+  schedule:
+    # dal lunedì al venerdì alle 22:20 UTC (dopo la chiusura di Wall Street)
+    - cron: "20 22 * * 1-5"
+    # sabato mattina, per le cripto del weekend
+    - cron: "20 8 * * 6"
+  workflow_dispatch:   # avvio manuale dal tab "Actions"
+  push:
+    branches: [main]
+    paths-ignore: ["data/**", "README.md", "scripts/tuning_report.json"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Installa dipendenze
+        run: pip install -r scripts/requirements.txt
+
+      # archivio prezzi (~20 anni), universo e anagrafiche tra un'esecuzione e l'altra:
+      # la prima volta scarica tutto, poi solo gli ultimi giorni
+      - name: Ripristina cache prezzi e universo
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            cache
+            data/universe.json
+            data/meta.json
+          key: dati-${{ github.run_id }}
+          restore-keys: dati-
+
+      - name: Scarica dati e calcola il modello
+        env:
+          MAX_DOWNLOAD_MIN: "100"
+        run: python scripts/update_data.py
+
+      # salva l'archivio anche se il passo precedente fallisce: il download riprende da qui
+      - name: Salva cache prezzi e universo
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            cache
+            data/universe.json
+            data/meta.json
+          key: dati-${{ github.run_id }}
+
+      - name: Prepara il sito
+        run: |
+          mkdir -p _site
+          cp -r index.html assets data .nojekyll _site/
+          rm -f _site/data/meta.json _site/data/universe.json
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

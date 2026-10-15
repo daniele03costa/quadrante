@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quadrante · Dashboard quantitativa</title>
+<meta name="description" content="Dashboard personale: regime macro, punteggio quantitativo a 5 pilastri, radar, rotazione, classifiche, portafogli.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#/" aria-label="Quadrante, dashboard">
+      <img src="assets/logo.svg" alt="" width="28" height="28">
+      <span>QUADRANTE</span>
+    </a>
+    <div class="clock" id="clock" aria-live="off"></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="search" type="search" placeholder="Ticker o nome, poi Invio" autocomplete="off" aria-label="Cerca strumento">
+      <ul id="search-results" class="search-results" role="listbox"></ul>
+    </div>
+    <button class="icon-btn menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false">☰</button>
+  </div>
+  <nav class="nav" id="nav" aria-label="Sezioni">
+    <a href="#/" data-key="1" data-route="">Dashboard</a>
+    <a href="#/portafogli" data-key="2" data-route="portafogli">Portafogli</a>
+    <a href="#/radar" data-key="3" data-route="radar">Radar</a>
+    <div class="dd">
+      <button class="dd-btn" data-key="4" data-route="classifica mappa confronta">Classifiche ▾</button>
+      <div class="dd-menu">
+        <a href="#/classifica"><b>Classifica</b><span>Tutti gli strumenti in ordine di punteggio, per mercato</span></a>
+        <a href="#/mappa"><b>Mappa dei punteggi</b><span>Dove si concentrano i punteggi alti, per settore</span></a>
+        <a href="#/confronta"><b>Confronta</b><span>Fino a quattro strumenti affiancati</span></a>
+      </div>
+    </div>
+    <a href="#/rotation" data-key="5" data-route="rotation">Rotation</a>
+    <a href="#/paesi" data-key="6" data-route="paesi">Paesi</a>
+    <a href="#/temi" data-key="7" data-route="temi">Temi</a>
+    <div class="dd">
+      <button class="dd-btn" data-key="8" data-route="news">News e Macro ▾</button>
+      <div class="dd-menu">
+        <a href="#/news/earnings"><b>Earnings</b><span>Prossime trimestrali dei titoli monitorati</span></a>
+        <a href="#/news/calendario"><b>Calendario macro</b><span>Dati economici della settimana</span></a>
+        <a href="#/news/cot"><b>Commitment of Traders</b><span>Posizionamento dei grandi speculatori (CFTC)</span></a>
+      </div>
+    </div>
+    <a href="#/metodo" data-key="9" data-route="metodo">Metodo</a>
+  </nav>
+  <div class="tape" id="tape" aria-label="Quotazioni principali"></div>
+</header>
+
+<div id="demo-banner" class="banner" hidden>
+  Stai vedendo <strong>dati dimostrativi</strong>. Alla prima esecuzione della GitHub Action vengono sostituiti da quelli reali.
+</div>
+<main id="view" tabindex="-1"></main>
+
+<footer class="footer">
+  <p>Quadrante è uno strumento personale di studio. I punteggi sono calcolati in modo meccanico da prezzi storici e dati pubblici; i risultati storici sono backtest. <strong>Non è consulenza finanziaria.</strong></p>
+  <p class="muted small">Dati: Yahoo Finance (via yfinance), FRED – Federal Reserve Bank of St. Louis, CFTC, ForexFactory. Grafici: <a href="https://www.tradingview.com/lightweight-charts/" target="_blank" rel="noopener">TradingView Lightweight Charts</a>. <span id="updated"></span></p>
+</footer>
+
+<script src="assets/vendor/lightweight-charts.standalone.production.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/pages-main.js"></script>
+<script src="assets/js/pages-tools.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
