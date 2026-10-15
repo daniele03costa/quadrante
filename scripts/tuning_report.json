@@ -1,0 +1,556 @@
+{
+ "date": "2026-10-15",
+ "demo": false,
+ "best": {
+  "cfg": {
+   "nb": 10,
+   "lam_frac": 0.002,
+   "smooth": 4,
+   "pillars": [
+    "macro",
+    "trend",
+    "momentum",
+    "season",
+    "risk"
+   ]
+  },
+  "why": "configurazione iniziale",
+  "metrics": {
+   "selezione": {
+    "ic": 0.0019,
+    "ic_ir": 0.017,
+    "spread": 0.0041,
+    "hit80": 0.503,
+    "mono": 0.857,
+    "weeks": 759
+   },
+   "verifica": {
+    "ic": 0.0693,
+    "ic_ir": 1.085,
+    "spread": 0.0265,
+    "hit80": 0.564,
+    "mono": 0.964,
+    "weeks": 157
+   },
+   "calib_err": 0.0378,
+   "turnover": 4.75
+  },
+  "objective": -0.00657,
+  "sec": 33
+ },
+ "tried": [
+  {
+   "cfg": {
+    "nb": 10,
+    "lam_frac": 0.002,
+    "smooth": 4,
+    "pillars": [
+     "macro",
+     "trend",
+     "momentum",
+     "season",
+     "risk"
+    ]
+   },
+   "why": "configurazione iniziale",
+   "metrics": {
+    "selezione": {
+     "ic": 0.0019,
+     "ic_ir": 0.017,
+     "spread": 0.0041,
+     "hit80": 0.503,
+     "mono": 0.857,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0693,
+     "ic_ir": 1.085,
+     "spread": 0.0265,
+     "hit80": 0.564,
+     "mono": 0.964,
+     "weeks": 157
+    },
+    "calib_err": 0.0378,
+    "turnover": 4.75
+   },
+   "objective": -0.00657,
+   "sec": 33
+  },
+  {
+   "cfg": {
+    "nb": 10,
+    "lam_frac": 0.002,
+    "smooth": 1,
+    "pillars": [
+     "macro",
+     "trend",
+     "momentum",
+     "season",
+     "risk"
+    ]
+   },
+   "why": "smooth = 1",
+   "metrics": {
+    "selezione": {
+     "ic": 0.0046,
+     "ic_ir": 0.044,
+     "spread": 0.0048,
+     "hit80": 0.504,
+     "mono": 0.879,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.068,
+     "ic_ir": 1.085,
+     "spread": 0.0266,
+     "hit80": 0.563,
+     "mono": 0.964,
+     "weeks": 157
+    },
+    "calib_err": 0.035,
+    "turnover": 10.66
+   },
+   "objective": -0.01552,
+   "sec": 33
+  },
+  {
+   "cfg": {
+    "nb": 10,
+    "lam_frac": 0.002,
+    "smooth": 8,
+    "pillars": [
+     "macro",
+     "trend",
+     "momentum",
+     "season",
+     "risk"
+    ]
+   },
+   "why": "smooth = 8",
+   "metrics": {
+    "selezione": {
+     "ic": -0.0001,
+     "ic_ir": -0.0,
+     "spread": 0.0038,
+     "hit80": 0.504,
+     "mono": 0.766,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0682,
+     "ic_ir": 1.063,
+     "spread": 0.0253,
+     "hit80": 0.563,
+     "mono": 0.964,
+     "weeks": 157
+    },
+    "calib_err": 0.0391,
+    "turnover": 3.09
+   },
+   "objective": -0.00533,
+   "sec": 33
+  },
+  {
+   "cfg": {
+    "nb": 10,
+    "lam_frac": 0.002,
+    "smooth": 13,
+    "pillars": [
+     "macro",
+     "trend",
+     "momentum",
+     "season",
+     "risk"
+    ]
+   },
+   "why": "smooth = 13",
+   "metrics": {
+    "selezione": {
+     "ic": -0.0014,
+     "ic_ir": -0.012,
+     "spread": 0.0035,
+     "hit80": 0.505,
+     "mono": 0.685,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0672,
+     "ic_ir": 1.05,
+     "spread": 0.0242,
+     "hit80": 0.56,
+     "mono": 0.964,
+     "weeks": 157
+    },
+    "calib_err": 0.0407,
+    "turnover": 2.28
+   },
+   "objective": -0.00509,
+   "sec": 32
+  },
+  {
+   "cfg": {
+    "nb": 5,
+    "lam_frac": 0.002,
+    "smooth": 4,
+    "pillars": [
+     "macro",
+     "trend",
+     "momentum",
+     "season",
+     "risk"
+    ]
+   },
+   "why": "nb = 5",
+   "metrics": {
+    "selezione": {
+     "ic": 0.0003,
+     "ic_ir": 0.002,
+     "spread": 0.0037,
+     "hit80": 0.506,
+     "mono": 0.733,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0639,
+     "ic_ir": 0.999,
+     "spread": 0.0223,
+     "hit80": 0.565,
+     "mono": 0.939,
+     "weeks": 157
+    },
+    "calib_err": 0.0378,
+    "turnover": 4.58
+   },
+   "objective": -0.00793,
+   "sec": 33
+  },
+  {
+   "cfg": {
+    "nb": 20,
+    "lam_frac": 0.002,
+    "smooth": 4,
+    "pillars": [
+     "macro",
+     "trend",
+     "momentum",
+     "season",
+     "risk"
+    ]
+   },
+   "why": "nb = 20",
+   "metrics": {
+    "selezione": {
+     "ic": 0.0028,
+     "ic_ir": 0.025,
+     "spread": 0.0041,
+     "hit80": 0.503,
+     "mono": 0.77,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0688,
+     "ic_ir": 1.049,
+     "spread": 0.0272,
+     "hit80": 0.563,
+     "mono": 0.988,
+     "weeks": 157
+    },
+    "calib_err": 0.0362,
+    "turnover": 4.96
+   },
+   "objective": -0.00609,
+   "sec": 33
+  },
+  {
+   "cfg": {
+    "nb": 10,
+    "lam_frac": 0.0005,
+    "smooth": 4,
+    "pillars": [
+     "macro",
+     "trend",
+     "momentum",
+     "season",
+     "risk"
+    ]
+   },
+   "why": "lam_frac = 0.0005",
+   "metrics": {
+    "selezione": {
+     "ic": 0.0019,
+     "ic_ir": 0.017,
+     "spread": 0.0041,
+     "hit80": 0.503,
+     "mono": 0.842,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0694,
+     "ic_ir": 1.086,
+     "spread": 0.0265,
+     "hit80": 0.565,
+     "mono": 0.964,
+     "weeks": 157
+    },
+    "calib_err": 0.0377,
+    "turnover": 4.75
+   },
+   "objective": -0.00657,
+   "sec": 32
+  },
+  {
+   "cfg": {
+    "nb": 10,
+    "lam_frac": 0.01,
+    "smooth": 4,
+    "pillars": [
+     "macro",
+     "trend",
+     "momentum",
+     "season",
+     "risk"
+    ]
+   },
+   "why": "lam_frac = 0.01",
+   "metrics": {
+    "selezione": {
+     "ic": 0.0016,
+     "ic_ir": 0.014,
+     "spread": 0.0041,
+     "hit80": 0.503,
+     "mono": 0.867,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0691,
+     "ic_ir": 1.084,
+     "spread": 0.0265,
+     "hit80": 0.565,
+     "mono": 0.964,
+     "weeks": 157
+    },
+    "calib_err": 0.0377,
+    "turnover": 4.73
+   },
+   "objective": -0.00684,
+   "sec": 33
+  },
+  {
+   "cfg": {
+    "nb": 10,
+    "lam_frac": 0.05,
+    "smooth": 4,
+    "pillars": [
+     "macro",
+     "trend",
+     "momentum",
+     "season",
+     "risk"
+    ]
+   },
+   "why": "lam_frac = 0.05",
+   "metrics": {
+    "selezione": {
+     "ic": 0.0016,
+     "ic_ir": 0.014,
+     "spread": 0.0042,
+     "hit80": 0.504,
+     "mono": 0.818,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0679,
+     "ic_ir": 1.071,
+     "spread": 0.0258,
+     "hit80": 0.565,
+     "mono": 0.964,
+     "weeks": 157
+    },
+    "calib_err": 0.0373,
+    "turnover": 4.64
+   },
+   "objective": -0.00663,
+   "sec": 33
+  },
+  {
+   "cfg": {
+    "nb": 10,
+    "lam_frac": 0.002,
+    "smooth": 4,
+    "pillars": [
+     "trend",
+     "momentum",
+     "season",
+     "risk"
+    ]
+   },
+   "why": "senza pilastro macro",
+   "metrics": {
+    "selezione": {
+     "ic": -0.0004,
+     "ic_ir": -0.003,
+     "spread": 0.0033,
+     "hit80": 0.498,
+     "mono": 0.552,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0797,
+     "ic_ir": 1.217,
+     "spread": 0.0306,
+     "hit80": 0.566,
+     "mono": 0.988,
+     "weeks": 157
+    },
+    "calib_err": 0.0412,
+    "turnover": 5.29
+   },
+   "objective": -0.01016,
+   "sec": 33
+  },
+  {
+   "cfg": {
+    "nb": 10,
+    "lam_frac": 0.002,
+    "smooth": 4,
+    "pillars": [
+     "macro",
+     "momentum",
+     "season",
+     "risk"
+    ]
+   },
+   "why": "senza pilastro trend",
+   "metrics": {
+    "selezione": {
+     "ic": 0.0009,
+     "ic_ir": 0.008,
+     "spread": 0.0034,
+     "hit80": 0.505,
+     "mono": 0.552,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0548,
+     "ic_ir": 0.896,
+     "spread": 0.0181,
+     "hit80": 0.555,
+     "mono": 0.964,
+     "weeks": 157
+    },
+    "calib_err": 0.0368,
+    "turnover": 5.02
+   },
+   "objective": -0.00829,
+   "sec": 34
+  },
+  {
+   "cfg": {
+    "nb": 10,
+    "lam_frac": 0.002,
+    "smooth": 4,
+    "pillars": [
+     "macro",
+     "trend",
+     "season",
+     "risk"
+    ]
+   },
+   "why": "senza pilastro momentum",
+   "metrics": {
+    "selezione": {
+     "ic": 0.0014,
+     "ic_ir": 0.012,
+     "spread": 0.0043,
+     "hit80": 0.505,
+     "mono": 0.818,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0644,
+     "ic_ir": 1.022,
+     "spread": 0.0245,
+     "hit80": 0.559,
+     "mono": 0.964,
+     "weeks": 157
+    },
+    "calib_err": 0.0393,
+    "turnover": 4.11
+   },
+   "objective": -0.00575,
+   "sec": 33
+  },
+  {
+   "cfg": {
+    "nb": 10,
+    "lam_frac": 0.002,
+    "smooth": 4,
+    "pillars": [
+     "macro",
+     "trend",
+     "momentum",
+     "risk"
+    ]
+   },
+   "why": "senza pilastro season",
+   "metrics": {
+    "selezione": {
+     "ic": 0.0021,
+     "ic_ir": 0.018,
+     "spread": 0.0046,
+     "hit80": 0.503,
+     "mono": 0.709,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0671,
+     "ic_ir": 1.079,
+     "spread": 0.0262,
+     "hit80": 0.564,
+     "mono": 0.964,
+     "weeks": 157
+    },
+    "calib_err": 0.0361,
+    "turnover": 4.53
+   },
+   "objective": -0.00581,
+   "sec": 33
+  },
+  {
+   "cfg": {
+    "nb": 10,
+    "lam_frac": 0.002,
+    "smooth": 4,
+    "pillars": [
+     "macro",
+     "trend",
+     "momentum",
+     "season"
+    ]
+   },
+   "why": "senza pilastro risk",
+   "metrics": {
+    "selezione": {
+     "ic": 0.0108,
+     "ic_ir": 0.108,
+     "spread": 0.0061,
+     "hit80": 0.512,
+     "mono": 0.915,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0566,
+     "ic_ir": 0.883,
+     "spread": 0.0216,
+     "hit80": 0.555,
+     "mono": 0.988,
+     "weeks": 157
+    },
+    "calib_err": 0.0226,
+    "turnover": 5.08
+   },
+   "objective": 0.00217,
+   "sec": 33
+  }
+ ]
+}

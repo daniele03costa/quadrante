@@ -1,0 +1,12 @@
+{
+ "nb": 10,
+ "lam_frac": 0.002,
+ "smooth": 4,
+ "pillars": [
+  "macro",
+  "trend",
+  "momentum",
+  "season",
+  "risk"
+ ]
+}
