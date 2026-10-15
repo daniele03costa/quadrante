@@ -133,6 +133,15 @@ def main():
     with open(os.path.join(HERE, "tuning_report.json"), "w") as f:
         json.dump({"date": pd.Timestamp.now().strftime("%Y-%m-%d"), "demo": demo, "best": best, "tried": tried}, f, indent=1)
     print("\nMigliore:", best["why"], best["cfg"])
+    if os.environ.get("GITHUB_ACTIONS"):
+        rows = ["VARIANTE | OBIETTIVO | IC | IC VERIFICA | SPREAD | ERRORE PROB. | TURNOVER"]
+        for t in tried:
+            m = t["metrics"]
+            rows.append(f"{'>> ' if t is best else ''}{t['why']} | {t['objective']:+.4f} | {m['selezione']['ic']} | "
+                        f"{m['verifica']['ic']} | {m['selezione']['spread']} | {m['calib_err']} | {m['turnover']}")
+        rows.append(f"Scelta: {best['why']} {best['cfg']}")
+        rows.append(f"Verifica ultimi 3 anni: {best['metrics']['verifica']}")
+        print("::notice title=Taratura::" + "%0A".join(rows))
     print("Verifica sugli ultimi 3 anni:", best["metrics"]["verifica"])
 
 

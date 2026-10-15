@@ -40,4 +40,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add scripts/model_config.json scripts/tuning_report.json
           git commit -m "Taratura del modello $(date -u +'%Y-%m-%d')" || echo "Nessuna modifica"
+          # il ramo può essere avanzato durante la taratura: riallinea prima di salvare
+          git pull --rebase origin main
           git push
