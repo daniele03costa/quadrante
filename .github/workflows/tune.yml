@@ -4,6 +4,8 @@ name: Taratura del modello
 # salva la migliore in scripts/model_config.json e ripubblica il sito.
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "40 4 1 * *"     # il primo di ogni mese, di notte
 
 permissions:
   contents: write
