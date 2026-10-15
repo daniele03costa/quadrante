@@ -1,7 +1,8 @@
 {
- "nb": 10,
+ "nb": 20,
  "lam_frac": 0.002,
  "smooth": 4,
+ "by_market": true,
  "pillars": [
   "macro",
   "trend",

@@ -3,9 +3,10 @@
  "demo": false,
  "best": {
   "cfg": {
-   "nb": 10,
+   "nb": 20,
    "lam_frac": 0.002,
    "smooth": 4,
+   "by_market": true,
    "pillars": [
     "macro",
     "trend",
@@ -14,29 +15,29 @@
     "risk"
    ]
   },
-  "why": "configurazione iniziale",
+  "why": "nb = 20",
   "metrics": {
    "selezione": {
-    "ic": 0.0019,
-    "ic_ir": 0.017,
-    "spread": 0.0041,
-    "hit80": 0.503,
-    "mono": 0.857,
+    "ic": 0.0162,
+    "ic_ir": 0.179,
+    "spread": 0.0062,
+    "hit80": 0.511,
+    "mono": 1.0,
     "weeks": 759
    },
    "verifica": {
-    "ic": 0.0693,
-    "ic_ir": 1.085,
-    "spread": 0.0265,
-    "hit80": 0.564,
-    "mono": 0.964,
+    "ic": 0.0736,
+    "ic_ir": 1.15,
+    "spread": 0.0284,
+    "hit80": 0.558,
+    "mono": 1.0,
     "weeks": 157
    },
-   "calib_err": 0.0378,
-   "turnover": 4.75
+   "calib_err": 0.0411,
+   "turnover": 5.23
   },
-  "objective": -0.00657,
-  "sec": 33
+  "objective": 0.00729,
+  "sec": 40
  },
  "tried": [
   {
@@ -44,6 +45,7 @@
     "nb": 10,
     "lam_frac": 0.002,
     "smooth": 4,
+    "by_market": false,
     "pillars": [
      "macro",
      "trend",
@@ -63,24 +65,63 @@
      "weeks": 759
     },
     "verifica": {
-     "ic": 0.0693,
-     "ic_ir": 1.085,
+     "ic": 0.0692,
+     "ic_ir": 1.082,
      "spread": 0.0265,
      "hit80": 0.564,
      "mono": 0.964,
      "weeks": 157
     },
-    "calib_err": 0.0378,
-    "turnover": 4.75
+    "calib_err": 0.0377,
+    "turnover": 4.73
    },
-   "objective": -0.00657,
-   "sec": 33
+   "objective": -0.00654,
+   "sec": 31
+  },
+  {
+   "cfg": {
+    "nb": 10,
+    "lam_frac": 0.002,
+    "smooth": 4,
+    "by_market": true,
+    "pillars": [
+     "macro",
+     "trend",
+     "momentum",
+     "season",
+     "risk"
+    ]
+   },
+   "why": "un modello per ogni mercato",
+   "metrics": {
+    "selezione": {
+     "ic": 0.0139,
+     "ic_ir": 0.151,
+     "spread": 0.0048,
+     "hit80": 0.509,
+     "mono": 0.879,
+     "weeks": 759
+    },
+    "verifica": {
+     "ic": 0.0767,
+     "ic_ir": 1.23,
+     "spread": 0.0307,
+     "hit80": 0.561,
+     "mono": 1.0,
+     "weeks": 157
+    },
+    "calib_err": 0.0404,
+    "turnover": 5.03
+   },
+   "objective": 0.00504,
+   "sec": 38
   },
   {
    "cfg": {
     "nb": 10,
     "lam_frac": 0.002,
     "smooth": 1,
+    "by_market": true,
     "pillars": [
      "macro",
      "trend",
@@ -92,32 +133,33 @@
    "why": "smooth = 1",
    "metrics": {
     "selezione": {
-     "ic": 0.0046,
-     "ic_ir": 0.044,
-     "spread": 0.0048,
-     "hit80": 0.504,
-     "mono": 0.879,
+     "ic": 0.0153,
+     "ic_ir": 0.178,
+     "spread": 0.0056,
+     "hit80": 0.509,
+     "mono": 0.988,
      "weeks": 759
     },
     "verifica": {
-     "ic": 0.068,
-     "ic_ir": 1.085,
-     "spread": 0.0266,
-     "hit80": 0.563,
-     "mono": 0.964,
+     "ic": 0.076,
+     "ic_ir": 1.24,
+     "spread": 0.0306,
+     "hit80": 0.559,
+     "mono": 1.0,
      "weeks": 157
     },
-    "calib_err": 0.035,
-    "turnover": 10.66
+    "calib_err": 0.0384,
+    "turnover": 11.17
    },
-   "objective": -0.01552,
-   "sec": 33
+   "objective": -0.00564,
+   "sec": 38
   },
   {
    "cfg": {
     "nb": 10,
     "lam_frac": 0.002,
     "smooth": 8,
+    "by_market": true,
     "pillars": [
      "macro",
      "trend",
@@ -129,32 +171,33 @@
    "why": "smooth = 8",
    "metrics": {
     "selezione": {
-     "ic": -0.0001,
-     "ic_ir": -0.0,
-     "spread": 0.0038,
-     "hit80": 0.504,
-     "mono": 0.766,
+     "ic": 0.012,
+     "ic_ir": 0.127,
+     "spread": 0.004,
+     "hit80": 0.509,
+     "mono": 0.976,
      "weeks": 759
     },
     "verifica": {
-     "ic": 0.0682,
-     "ic_ir": 1.063,
-     "spread": 0.0253,
-     "hit80": 0.563,
-     "mono": 0.964,
+     "ic": 0.0745,
+     "ic_ir": 1.194,
+     "spread": 0.0292,
+     "hit80": 0.559,
+     "mono": 0.988,
      "weeks": 157
     },
-    "calib_err": 0.0391,
-    "turnover": 3.09
+    "calib_err": 0.0412,
+    "turnover": 3.3
    },
-   "objective": -0.00533,
-   "sec": 33
+   "objective": 0.0064,
+   "sec": 38
   },
   {
    "cfg": {
     "nb": 10,
     "lam_frac": 0.002,
     "smooth": 13,
+    "by_market": true,
     "pillars": [
      "macro",
      "trend",
@@ -166,32 +209,33 @@
    "why": "smooth = 13",
    "metrics": {
     "selezione": {
-     "ic": -0.0014,
-     "ic_ir": -0.012,
-     "spread": 0.0035,
-     "hit80": 0.505,
-     "mono": 0.685,
+     "ic": 0.0102,
+     "ic_ir": 0.105,
+     "spread": 0.0034,
+     "hit80": 0.508,
+     "mono": 0.952,
      "weeks": 759
     },
     "verifica": {
-     "ic": 0.0672,
-     "ic_ir": 1.05,
-     "spread": 0.0242,
-     "hit80": 0.56,
-     "mono": 0.964,
+     "ic": 0.0719,
+     "ic_ir": 1.157,
+     "spread": 0.0274,
+     "hit80": 0.557,
+     "mono": 0.952,
      "weeks": 157
     },
-    "calib_err": 0.0407,
-    "turnover": 2.28
+    "calib_err": 0.0428,
+    "turnover": 2.46
    },
-   "objective": -0.00509,
-   "sec": 32
+   "objective": 0.00613,
+   "sec": 38
   },
   {
    "cfg": {
     "nb": 5,
     "lam_frac": 0.002,
     "smooth": 4,
+    "by_market": true,
     "pillars": [
      "macro",
      "trend",
@@ -203,32 +247,33 @@
    "why": "nb = 5",
    "metrics": {
     "selezione": {
-     "ic": 0.0003,
-     "ic_ir": 0.002,
-     "spread": 0.0037,
-     "hit80": 0.506,
-     "mono": 0.733,
+     "ic": 0.0118,
+     "ic_ir": 0.119,
+     "spread": 0.0039,
+     "hit80": 0.509,
+     "mono": 0.891,
      "weeks": 759
     },
     "verifica": {
-     "ic": 0.0639,
-     "ic_ir": 0.999,
-     "spread": 0.0223,
-     "hit80": 0.565,
-     "mono": 0.939,
+     "ic": 0.0691,
+     "ic_ir": 1.246,
+     "spread": 0.0295,
+     "hit80": 0.563,
+     "mono": 0.988,
      "weeks": 157
     },
-    "calib_err": 0.0378,
-    "turnover": 4.58
+    "calib_err": 0.0359,
+    "turnover": 4.82
    },
-   "objective": -0.00793,
-   "sec": 33
+   "objective": 0.00313,
+   "sec": 38
   },
   {
    "cfg": {
     "nb": 20,
     "lam_frac": 0.002,
     "smooth": 4,
+    "by_market": true,
     "pillars": [
      "macro",
      "trend",
@@ -240,32 +285,33 @@
    "why": "nb = 20",
    "metrics": {
     "selezione": {
-     "ic": 0.0028,
-     "ic_ir": 0.025,
-     "spread": 0.0041,
-     "hit80": 0.503,
-     "mono": 0.77,
+     "ic": 0.0162,
+     "ic_ir": 0.179,
+     "spread": 0.0062,
+     "hit80": 0.511,
+     "mono": 1.0,
      "weeks": 759
     },
     "verifica": {
-     "ic": 0.0688,
-     "ic_ir": 1.049,
-     "spread": 0.0272,
-     "hit80": 0.563,
-     "mono": 0.988,
+     "ic": 0.0736,
+     "ic_ir": 1.15,
+     "spread": 0.0284,
+     "hit80": 0.558,
+     "mono": 1.0,
      "weeks": 157
     },
-    "calib_err": 0.0362,
-    "turnover": 4.96
+    "calib_err": 0.0411,
+    "turnover": 5.23
    },
-   "objective": -0.00609,
-   "sec": 33
+   "objective": 0.00729,
+   "sec": 40
   },
   {
    "cfg": {
-    "nb": 10,
+    "nb": 20,
     "lam_frac": 0.0005,
     "smooth": 4,
+    "by_market": true,
     "pillars": [
      "macro",
      "trend",
@@ -277,32 +323,33 @@
    "why": "lam_frac = 0.0005",
    "metrics": {
     "selezione": {
-     "ic": 0.0019,
-     "ic_ir": 0.017,
-     "spread": 0.0041,
-     "hit80": 0.503,
-     "mono": 0.842,
+     "ic": 0.0162,
+     "ic_ir": 0.181,
+     "spread": 0.0062,
+     "hit80": 0.511,
+     "mono": 1.0,
      "weeks": 759
     },
     "verifica": {
-     "ic": 0.0694,
-     "ic_ir": 1.086,
-     "spread": 0.0265,
-     "hit80": 0.565,
-     "mono": 0.964,
+     "ic": 0.0736,
+     "ic_ir": 1.148,
+     "spread": 0.0286,
+     "hit80": 0.558,
+     "mono": 1.0,
      "weeks": 157
     },
-    "calib_err": 0.0377,
-    "turnover": 4.75
+    "calib_err": 0.041,
+    "turnover": 5.24
    },
-   "objective": -0.00657,
-   "sec": 32
+   "objective": 0.00727,
+   "sec": 41
   },
   {
    "cfg": {
-    "nb": 10,
+    "nb": 20,
     "lam_frac": 0.01,
     "smooth": 4,
+    "by_market": true,
     "pillars": [
      "macro",
      "trend",
@@ -314,32 +361,33 @@
    "why": "lam_frac = 0.01",
    "metrics": {
     "selezione": {
-     "ic": 0.0016,
-     "ic_ir": 0.014,
-     "spread": 0.0041,
-     "hit80": 0.503,
-     "mono": 0.867,
+     "ic": 0.0164,
+     "ic_ir": 0.175,
+     "spread": 0.0062,
+     "hit80": 0.512,
+     "mono": 1.0,
      "weeks": 759
     },
     "verifica": {
-     "ic": 0.0691,
-     "ic_ir": 1.084,
-     "spread": 0.0265,
-     "hit80": 0.565,
-     "mono": 0.964,
+     "ic": 0.0735,
+     "ic_ir": 1.151,
+     "spread": 0.0279,
+     "hit80": 0.558,
+     "mono": 1.0,
      "weeks": 157
     },
-    "calib_err": 0.0377,
-    "turnover": 4.73
+    "calib_err": 0.0408,
+    "turnover": 5.2
    },
-   "objective": -0.00684,
-   "sec": 33
+   "objective": 0.00755,
+   "sec": 40
   },
   {
    "cfg": {
-    "nb": 10,
+    "nb": 20,
     "lam_frac": 0.05,
     "smooth": 4,
+    "by_market": true,
     "pillars": [
      "macro",
      "trend",
@@ -351,32 +399,33 @@
    "why": "lam_frac = 0.05",
    "metrics": {
     "selezione": {
-     "ic": 0.0016,
-     "ic_ir": 0.014,
-     "spread": 0.0042,
-     "hit80": 0.504,
-     "mono": 0.818,
+     "ic": 0.0172,
+     "ic_ir": 0.175,
+     "spread": 0.0064,
+     "hit80": 0.514,
+     "mono": 0.988,
      "weeks": 759
     },
     "verifica": {
-     "ic": 0.0679,
-     "ic_ir": 1.071,
-     "spread": 0.0258,
-     "hit80": 0.565,
-     "mono": 0.964,
+     "ic": 0.0717,
+     "ic_ir": 1.141,
+     "spread": 0.0277,
+     "hit80": 0.56,
+     "mono": 0.988,
      "weeks": 157
     },
-    "calib_err": 0.0373,
-    "turnover": 4.64
+    "calib_err": 0.0392,
+    "turnover": 5.11
    },
-   "objective": -0.00663,
-   "sec": 33
+   "objective": 0.00858,
+   "sec": 40
   },
   {
    "cfg": {
-    "nb": 10,
+    "nb": 20,
     "lam_frac": 0.002,
     "smooth": 4,
+    "by_market": true,
     "pillars": [
      "trend",
      "momentum",
@@ -387,32 +436,33 @@
    "why": "senza pilastro macro",
    "metrics": {
     "selezione": {
-     "ic": -0.0004,
-     "ic_ir": -0.003,
-     "spread": 0.0033,
-     "hit80": 0.498,
-     "mono": 0.552,
+     "ic": 0.0168,
+     "ic_ir": 0.18,
+     "spread": 0.0057,
+     "hit80": 0.51,
+     "mono": 0.952,
      "weeks": 759
     },
     "verifica": {
      "ic": 0.0797,
-     "ic_ir": 1.217,
-     "spread": 0.0306,
-     "hit80": 0.566,
-     "mono": 0.988,
+     "ic_ir": 1.336,
+     "spread": 0.0313,
+     "hit80": 0.563,
+     "mono": 0.952,
      "weeks": 157
     },
-    "calib_err": 0.0412,
-    "turnover": 5.29
+    "calib_err": 0.0417,
+    "turnover": 5.48
    },
-   "objective": -0.01016,
-   "sec": 33
+   "objective": 0.00726,
+   "sec": 40
   },
   {
    "cfg": {
-    "nb": 10,
+    "nb": 20,
     "lam_frac": 0.002,
     "smooth": 4,
+    "by_market": true,
     "pillars": [
      "macro",
      "momentum",
@@ -423,32 +473,33 @@
    "why": "senza pilastro trend",
    "metrics": {
     "selezione": {
-     "ic": 0.0009,
-     "ic_ir": 0.008,
-     "spread": 0.0034,
-     "hit80": 0.505,
-     "mono": 0.552,
+     "ic": 0.0128,
+     "ic_ir": 0.145,
+     "spread": 0.005,
+     "hit80": 0.509,
+     "mono": 0.939,
      "weeks": 759
     },
     "verifica": {
-     "ic": 0.0548,
-     "ic_ir": 0.896,
-     "spread": 0.0181,
-     "hit80": 0.555,
+     "ic": 0.0587,
+     "ic_ir": 0.973,
+     "spread": 0.0222,
+     "hit80": 0.55,
      "mono": 0.964,
      "weeks": 157
     },
-    "calib_err": 0.0368,
-    "turnover": 5.02
+    "calib_err": 0.0362,
+    "turnover": 5.68
    },
-   "objective": -0.00829,
-   "sec": 34
+   "objective": 0.00269,
+   "sec": 40
   },
   {
    "cfg": {
-    "nb": 10,
+    "nb": 20,
     "lam_frac": 0.002,
     "smooth": 4,
+    "by_market": true,
     "pillars": [
      "macro",
      "trend",
@@ -459,32 +510,33 @@
    "why": "senza pilastro momentum",
    "metrics": {
     "selezione": {
-     "ic": 0.0014,
-     "ic_ir": 0.012,
-     "spread": 0.0043,
-     "hit80": 0.505,
-     "mono": 0.818,
+     "ic": 0.0155,
+     "ic_ir": 0.174,
+     "spread": 0.006,
+     "hit80": 0.512,
+     "mono": 0.988,
      "weeks": 759
     },
     "verifica": {
-     "ic": 0.0644,
-     "ic_ir": 1.022,
-     "spread": 0.0245,
-     "hit80": 0.559,
-     "mono": 0.964,
+     "ic": 0.0706,
+     "ic_ir": 1.115,
+     "spread": 0.0275,
+     "hit80": 0.555,
+     "mono": 1.0,
      "weeks": 157
     },
-    "calib_err": 0.0393,
-    "turnover": 4.11
+    "calib_err": 0.0399,
+    "turnover": 4.7
    },
-   "objective": -0.00575,
-   "sec": 33
+   "objective": 0.0076,
+   "sec": 40
   },
   {
    "cfg": {
-    "nb": 10,
+    "nb": 20,
     "lam_frac": 0.002,
     "smooth": 4,
+    "by_market": true,
     "pillars": [
      "macro",
      "trend",
@@ -495,32 +547,33 @@
    "why": "senza pilastro season",
    "metrics": {
     "selezione": {
-     "ic": 0.0021,
-     "ic_ir": 0.018,
-     "spread": 0.0046,
-     "hit80": 0.503,
-     "mono": 0.709,
+     "ic": 0.0136,
+     "ic_ir": 0.149,
+     "spread": 0.007,
+     "hit80": 0.51,
+     "mono": 0.988,
      "weeks": 759
     },
     "verifica": {
-     "ic": 0.0671,
-     "ic_ir": 1.079,
-     "spread": 0.0262,
-     "hit80": 0.564,
-     "mono": 0.964,
+     "ic": 0.0761,
+     "ic_ir": 1.125,
+     "spread": 0.0287,
+     "hit80": 0.561,
+     "mono": 1.0,
      "weeks": 157
     },
-    "calib_err": 0.0361,
-    "turnover": 4.53
+    "calib_err": 0.043,
+    "turnover": 4.85
    },
-   "objective": -0.00581,
-   "sec": 33
+   "objective": 0.00565,
+   "sec": 40
   },
   {
    "cfg": {
-    "nb": 10,
+    "nb": 20,
     "lam_frac": 0.002,
     "smooth": 4,
+    "by_market": true,
     "pillars": [
      "macro",
      "trend",
@@ -531,26 +584,26 @@
    "why": "senza pilastro risk",
    "metrics": {
     "selezione": {
-     "ic": 0.0108,
-     "ic_ir": 0.108,
-     "spread": 0.0061,
-     "hit80": 0.512,
-     "mono": 0.915,
+     "ic": 0.0231,
+     "ic_ir": 0.281,
+     "spread": 0.0081,
+     "hit80": 0.517,
+     "mono": 0.988,
      "weeks": 759
     },
     "verifica": {
-     "ic": 0.0566,
-     "ic_ir": 0.883,
-     "spread": 0.0216,
-     "hit80": 0.555,
-     "mono": 0.988,
+     "ic": 0.0579,
+     "ic_ir": 0.944,
+     "spread": 0.0232,
+     "hit80": 0.552,
+     "mono": 1.0,
      "weeks": 157
     },
-    "calib_err": 0.0226,
-    "turnover": 5.08
+    "calib_err": 0.0206,
+    "turnover": 5.43
    },
-   "objective": 0.00217,
-   "sec": 33
+   "objective": 0.01426,
+   "sec": 39
   }
  ]
 }
