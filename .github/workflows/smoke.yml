@@ -22,7 +22,10 @@ jobs:
           cache-dependency-path: scripts/requirements.txt
       - run: pip install -r scripts/requirements.txt
       - name: Prova veloce
-        run: python scripts/update_data.py --smoke
+        run: |
+          set -o pipefail
+          python scripts/update_data.py --smoke 2>&1 | tee run.log
+      # il riepilogo diventa un'annotazione dell'esecuzione (visibile nella pagina della run e via API)
       - name: Riepilogo fonti
         if: always()
-        run: cat data/sources_report.json || true
+        run: python scripts/annotate.py run.log data/sources_report.json

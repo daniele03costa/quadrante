@@ -51,7 +51,13 @@ jobs:
       - name: Scarica dati e calcola il modello
         env:
           MAX_DOWNLOAD_MIN: "100"
-        run: python scripts/update_data.py
+        run: |
+          set -o pipefail
+          python scripts/update_data.py 2>&1 | tee run.log
+
+      - name: Riepilogo esecuzione
+        if: always()
+        run: python scripts/annotate.py run.log data/sources_report.json
 
       # salva l'archivio anche se il passo precedente fallisce: il download riprende da qui
       - name: Salva cache prezzi e universo
