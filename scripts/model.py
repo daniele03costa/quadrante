@@ -27,7 +27,8 @@ PILLARS = ["macro", "trend", "momentum", "season", "risk"]
 PILLAR_NAMES = {"macro": "Macro", "trend": "Tendenza", "momentum": "Momentum",
                 "season": "Stagionalità", "risk": "Rischio"}
 NB = 10                     # decili
-DEFAULT_CFG = {"nb": 10, "lam_frac": 0.002, "smooth": 4, "pillars": ["macro", "trend", "momentum", "season", "risk"]}
+DEFAULT_CFG = {"nb": 10, "lam_frac": 0.002, "smooth": 4, "by_market": False,
+               "pillars": ["macro", "trend", "momentum", "season", "risk"]}
 ENTRY, EXIT = 80, 60
 
 
@@ -213,26 +214,47 @@ def run_model(prices, groups_of, fred_growth=None, fred_infl=None, min_years=5, 
     edge = np.full((len(dates), len(tick)), np.nan)
     years = sorted(set(dates.year))
     first_year = years[0] + min_years
-    betas = {}
+    # unità di stima: un solo modello per tutti (default) oppure un modello per ogni mercato (cfg["by_market"])
+    all_cols = np.arange(len(tick))
+    if cfg.get("by_market"):
+        units = [np.array([tick.get_loc(c) for c in cols]) for cols in groups.values()]
+    else:
+        units = [all_cols]
+    P = len(PILLARS)
+    zero = np.zeros((P, nb))
+    beta_live_cols = [zero] * len(tick)
     for yr in years:
         if yr < first_year:
             continue
         start = pd.Timestamp(yr, 1, 1)
-        cutoff = start - pd.Timedelta(weeks=H)
-        rows = (dates <= cutoff)
-        m = trainable & rows[:, None]
-        if m.sum() < 2000:
-            continue
-        beta = fit_contrib(B[m], clipped(m), lam, nb)
-        betas[yr] = beta
+        rows = (dates <= start - pd.Timedelta(weeks=H))
         seg = (dates >= start) & (dates < pd.Timestamp(yr + 1, 1, 1))
-        Bs = B[seg]
-        edge[seg] = sum(beta[p][Bs[..., p]] for p in range(len(PILLARS)))
+        m_pool = trainable & rows[:, None]
+        if m_pool.sum() < 2000:
+            continue
+        beta_pool = fit_contrib(B[m_pool], clipped(m_pool), lam, nb) if len(units) > 1 else None
+        for u in units:
+            mu = np.zeros_like(m_pool)
+            mu[:, u] = m_pool[:, u]
+            beta = fit_contrib(B[mu], clipped(mu), lam, nb) if mu.sum() >= 2000 else beta_pool
+            if beta is None:
+                beta = fit_contrib(B[m_pool], clipped(m_pool), lam, nb)
+            Bs = B[seg][:, u]
+            edge[np.ix_(seg, u)] = sum(beta[p][Bs[..., p]] for p in range(P))
 
     # fit "live" con tutti i dati noti oggi, per l'ultima settimana
     m_all = trainable & (dates <= dates[-1] - pd.Timedelta(weeks=H))[:, None]
-    beta_live = fit_contrib(B[m_all], clipped(m_all), lam, nb) if m_all.sum() >= 2000 else np.zeros((len(PILLARS), nb))
-    edge[-1] = sum(beta_live[p][B[-1][..., p]] for p in range(len(PILLARS)))
+    beta_live = fit_contrib(B[m_all], clipped(m_all), lam, nb) if m_all.sum() >= 2000 else zero
+    for u in units:
+        if len(units) > 1:
+            mu = np.zeros_like(m_all)
+            mu[:, u] = m_all[:, u]
+            b = fit_contrib(B[mu], clipped(mu), lam, nb) if mu.sum() >= 2000 else beta_live
+        else:
+            b = beta_live
+        for j in u:
+            beta_live_cols[j] = b
+        edge[-1, u] = sum(b[p][B[-1][u, p]] for p in range(P))
 
     # media mobile esponenziale di 4 settimane: riduce i cambi di classifica dovuti al rumore
     edge_df = pd.DataFrame(edge, index=dates, columns=tick).ewm(span=max(1, smooth), min_periods=1).mean().where(alive & pd.DataFrame(np.isfinite(edge), index=dates, columns=tick))
@@ -249,7 +271,7 @@ def run_model(prices, groups_of, fred_growth=None, fred_infl=None, min_years=5, 
 
     return {
         "close": close, "W": W, "vol": vol, "regime": regime, "raw": raw, "pct": pct,
-        "edge": edge_df, "score": score_df, "groups": groups, "beta_live": beta_live,
+        "edge": edge_df, "score": score_df, "groups": groups, "beta_live": beta_live, "beta_cols": beta_live_cols,
         "B_last": B[-1], "calib": calib, "calib_mkt": calib_mkt, "first_year": first_year, "excess": excess, "cfg": cfg,
         "panels": (close, W, vol, sma200),
     }

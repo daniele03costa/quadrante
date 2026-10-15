@@ -51,6 +51,7 @@ jobs:
       - name: Scarica dati e calcola il modello
         env:
           MAX_DOWNLOAD_MIN: "100"
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: |
           set -o pipefail
           python scripts/update_data.py 2>&1 | tee run.log

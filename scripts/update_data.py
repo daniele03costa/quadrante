@@ -153,18 +153,25 @@ def fetch_fred(series_id):
         return _FRED_CACHE[series_id]
     import urllib.request
     s = None
+    key = os.environ.get("FRED_API_KEY", "").strip()
     try:
-        req = urllib.request.Request(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}",
-                                     headers=extras.UA)
-        with urllib.request.urlopen(req, timeout=45) as resp:
-            df = pd.read_csv(io.StringIO(resp.read().decode()))
+        if key:
+            url = (f"https://api.stlouisfed.org/fred/series/observations?series_id={series_id}"
+                   f"&api_key={key}&file_type=json")
+            obs = json.loads(urllib.request.urlopen(urllib.request.Request(url, headers=extras.UA), timeout=45).read())["observations"]
+            df = pd.DataFrame([(o["date"], o["value"]) for o in obs])
+        else:
+            req = urllib.request.Request(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}",
+                                         headers=extras.UA)
+            with urllib.request.urlopen(req, timeout=45) as resp:
+                df = pd.read_csv(io.StringIO(resp.read().decode()))
         df.columns = ["date", "value"]
         df["date"] = pd.to_datetime(df["date"])
         df["value"] = pd.to_numeric(df["value"], errors="coerce")
         s = df.dropna().set_index("date")["value"]
         s = s if len(s) > 30 else None
     except Exception as e:
-        print(f"  FRED {series_id} non disponibile: {e}")
+        print(f"  FRED {series_id} non disponibile: {str(e).replace(key, '***') if key else e}")
         if "timed out" in str(e) or "timeout" in str(e).lower():
             _FRED_DOWN = True
             print("  FRED non risponde: per questa esecuzione uso solo i segnali di mercato")
@@ -465,7 +472,8 @@ def main():
         if s_now is not None and j is not None:
             pillars = {p: (None if pd.isna(pct_last[p].get(t)) else round(float(pct_last[p][t]) * 100))
                        for p in model.PILLARS}
-            contrib = {p: round(float(beta[k][B_last[j, k]]), 5) for k, p in enumerate(model.PILLARS)}
+            bj = res["beta_cols"][j]
+            contrib = {p: round(float(bj[k][B_last[j, k]]), 5) for k, p in enumerate(model.PILLARS)}
         e_now = edge[t].iloc[-1] if t in edge else np.nan
         cal = calib_for(s_now, mkt) if s_now is not None else None
         s4 = s_series.iloc[-5] if len(s_series) > 5 else np.nan

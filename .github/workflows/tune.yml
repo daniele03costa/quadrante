@@ -33,6 +33,8 @@ jobs:
         run: |
           if [ ! -f data/universe.json ] || [ ! -f cache/prices.parquet ]; then python scripts/update_data.py; fi
       - name: Taratura
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: python scripts/tune.py
       - name: Salva la configurazione scelta
         run: |

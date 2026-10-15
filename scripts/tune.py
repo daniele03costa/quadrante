@@ -97,7 +97,7 @@ def main():
     info = {r["t"]: (r["type"], r["country"]) for r in rows}
     prices = U.demo_prices(tickers) if demo else U.price_store.load_prices(tickers, os.path.join(U.ROOT, "cache", "prices.parquet"), U.START)
     markets = {t: market_of(*info[t]) for t in prices}
-    fg = None if demo else U.fetch_fred("INDPRO")
+    fg = None if demo else U.fetch_fred("INDPRO")   # con FRED_API_KEY usa l'endpoint ufficiale
     fi = None if demo else U.fetch_fred("CPIAUCSL")
     panels = model.build_panels(prices)
 
@@ -114,6 +114,9 @@ def main():
         return rec
 
     best = run(dict(model.DEFAULT_CFG), "configurazione iniziale")
+    r = run({**best["cfg"], "by_market": True}, "un modello per ogni mercato")
+    if better(r, best):
+        best = r
     for key, values in (("smooth", [1, 8, 13]), ("nb", [5, 20]), ("lam_frac", [0.0005, 0.01, 0.05])):
         for v in values:
             cfg = {**best["cfg"], key: v}

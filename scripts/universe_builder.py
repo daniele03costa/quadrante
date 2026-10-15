@@ -19,7 +19,7 @@ import urllib.request
 
 import pandas as pd
 
-VERSION = 2          # aumentalo quando cambiano le fonti: l'universo in cache viene ricostruito
+VERSION = 3          # aumentalo quando cambiano le fonti: l'universo in cache viene ricostruito
 UA = {"User-Agent": "Mozilla/5.0 (Quadrante personal dashboard; contact via GitHub)"}
 
 # (pagina Wikipedia, suffisso Yahoo, paese)
@@ -99,9 +99,23 @@ def wiki_constituents(page, suffix, country):
     tables = pd.read_html(io.StringIO(html))
     best = []
     for df in tables:
-        cols = [str(c[-1] if isinstance(c, tuple) else c) for c in df.columns]
+        cols = [" ".join(str(x) for x in c) if isinstance(c, tuple) else str(c) for c in df.columns]
+        cols = [f"{c}#{i}" if cols.count(c) > 1 else c for i, c in enumerate(cols)]
         df.columns = cols
         tcol = next((c for c in cols if re.search(r"ticker|symbol|epic|code", c, re.I)), None)
+        if tcol is not None and len(df) >= 30:
+            looks = df[tcol].astype(str).str.strip().str.fullmatch(r"[A-Za-z][A-Za-z0-9.\-: ]{0,14}").mean()
+            if looks < 0.6:
+                tcol = None                          # l'intestazione inganna: decido guardando i valori
+        if tcol is None and len(df) >= 30:
+            # nessuna intestazione riconoscibile: cerco la colonna i cui valori sembrano ticker
+            best_c, best_f = None, 0.0
+            for c in cols:
+                v = df[c].astype(str).str.strip()
+                f = v.str.fullmatch(r"[A-Z][A-Z0-9.\- ]{0,9}").mean()
+                if f > best_f:
+                    best_c, best_f = c, f
+            tcol = best_c if best_f >= 0.8 else None
         if tcol is None or len(df) < 10:
             continue
         ncol = next((c for c in cols if re.search(r"company|security|name|constituent", c, re.I) and c != tcol), None)
