@@ -183,7 +183,7 @@ def load_meta(universe, wiki):
     import yfinance as yf
     now = time.time()
     todo = sorted(stocks, key=lambda t: meta.get(t, {}).get("ts", 0))
-    todo = [t for t in todo if now - meta.get(t, {}).get("ts", 0) > 14 * 86400][:400]
+    todo = [t for t in todo if now - meta.get(t, {}).get("ts", 0) > 14 * 86400][:30 if SMOKE else 400]
     for t in todo:
         m = meta.get(t, {})
         try:
